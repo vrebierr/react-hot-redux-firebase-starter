@@ -46,7 +46,7 @@ export function createRoom(room, cb) {
 
     ref.push(room)
       .then(() => {
-        dispatch(fetchRooms())
+        dispatch(fetchRooms());
         cb();
       })
       .catch((err) => {
@@ -106,13 +106,12 @@ export function sendMessage(message, cb) {
 
     ref.push(message)
       .then(() => {
-        dispatch(fetchMessages(message.room))
+        dispatch(fetchMessages(message.room));
         cb();
       })
       .catch((err) => {
         ajaxCallError(err);
         throw(err);
-        cb(err);
       });
   };
 }

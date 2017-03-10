@@ -24,8 +24,6 @@ export class ChatPage extends Component {
 
     this.updateRoomState = this.updateRoomState.bind(this);
     this.createRoom = this.createRoom.bind(this);
-
-    console.log(this.props.rooms);
   }
 
   updateRoomState(e) {
@@ -60,9 +58,9 @@ export class ChatPage extends Component {
           saving={this.state.saving}
         />
 
-        {this.props.rooms.map((room) => {
+      {this.props.rooms.map((room, index) => {
           return (
-            <li>
+            <li key={index}>
               <Link to={"/rooms/" + room.id}>{room.name}</Link>
             </li>
           );
@@ -71,6 +69,12 @@ export class ChatPage extends Component {
     );
   }
 }
+
+ChatPage.propTypes = {
+  fetchRooms: PropTypes.func.isRequired,
+  createRoom: PropTypes.func.isRequired,
+  rooms: PropTypes.array.isRequired
+};
 
 export default checkAuth(connect(
   (state) => ({ rooms: state.rooms }),

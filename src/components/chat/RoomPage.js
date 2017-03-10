@@ -33,6 +33,10 @@ export class RoomPage extends Component {
   sendMessage(e) {
     e.preventDefault();
 
+    if (!this.state.message.content) {
+      return;
+    }
+
     this.setState({ savind: true });
     this.props.sendMessage(this.state.message, () => {
       this.setState({

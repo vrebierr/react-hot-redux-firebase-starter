@@ -11,6 +11,7 @@ const MessageForm = ({message, onSave, onChange, saving}) => {
         label="Votre message"
         onChange={onChange}
         value={message.content}
+        required
         />
 
       <input

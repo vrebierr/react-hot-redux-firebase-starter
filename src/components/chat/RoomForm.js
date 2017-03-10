@@ -11,6 +11,7 @@ const RoomForm = ({room, onSave, onChange, saving}) => {
         label="Nom"
         onChange={onChange}
         value={room.name}
+        required
         />
 
       <input

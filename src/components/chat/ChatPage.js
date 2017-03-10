@@ -34,6 +34,11 @@ export class ChatPage extends Component {
 
   createRoom(e) {
     e.preventDefault();
+
+    if (!this.state.room.name) {
+      return;
+    }
+
     this.setState({ savind: true });
 
     this.props.createRoom(this.state.room, () => {

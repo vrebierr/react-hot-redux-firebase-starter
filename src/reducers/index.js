@@ -1,5 +1,8 @@
 import {combineReducers} from 'redux';
 import user from './userReducer';
+import rooms from './roomsReducer';
+import room from './roomReducer';
+import messages from './messagesReducer';
 import routesPermissions from './routesPermissionsReducer';
 import auth from './authReducer';
 
@@ -11,6 +14,9 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   routesPermissions,
   user,
+  rooms,
+  room,
+  messages,
   auth,
   ajaxCallsInProgress
 });

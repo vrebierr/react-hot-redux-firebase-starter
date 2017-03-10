@@ -11,6 +11,9 @@ export default {
   user: {
     isAdmin: undefined
   },
+  rooms: [],
+  room: {},
+  messages: [],
   auth: {
     isLogged: false,
     currentUserUID: null,

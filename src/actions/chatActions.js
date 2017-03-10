@@ -13,6 +13,13 @@ export function roomCreatedSuccess(room) {
 
 export function roomsFetchedSuccess(rooms) {
   return {
+    type: types.ROOMS_FETCHED_SUCCESS,
+    rooms
+  };
+}
+
+export function roomFetchedSuccess(rooms) {
+  return {
     type: types.ROOM_FETCHED_SUCCESS,
     rooms
   };
@@ -40,15 +47,66 @@ export function fetchRooms() {
   return (dispatch) => {
     firebaseApi
       .database()
-      .ref('/rooms/')
+      .ref('rooms')
       .orderByKey()
       .once('value')
       .then((snap) => {
-        dispatch(roomsFetchedSuccess(snap.val()));
+        const rooms = [];
+
+        snap.forEach((item) => {
+          let room = item.val();
+          room.id = item.getKey();
+
+          rooms.push(room);
+        });
+
+        dispatch(roomsFetchedSuccess(rooms));
       })
       .catch((err) => {
         ajaxCallError(err);
         throw(err);
+      });
+  };
+}
+
+export function fetchRoom(id) {
+  return (dispatch) => {
+    firebaseApi
+      .database()
+      .ref(`rooms/${id}`)
+      .once('value')
+      .then((snap) => {
+        dispatch(roomFetchedSuccess(snap.val()));
+      })
+      .catch((err) => {
+        ajaxCallError(err);
+        throw(err);
+      });
+  };
+}
+
+export function sendMessage(room) {
+  return (dispatch) => {
+
+  };
+}
+
+export function fetchMessages(room) {
+  return (dispatch) => {
+    firebaseApi
+      .database()
+      .ref(`/rooms/${room.id}/messages`)
+      .limitToLast(10)
+      .once('value')
+      .then((snap) => {
+        const messages = [];
+
+        snap.forEach((item) => {
+          let message = item.val();
+          message.id = item.getKey();
+
+          messages.push(message);
+        });
       });
   };
 }

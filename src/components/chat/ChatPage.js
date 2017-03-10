@@ -13,7 +13,6 @@ export class ChatPage extends Component {
     super(props, context);
 
     this.state = {
-      rooms: [],
       room: {
         name: ''
       },
@@ -24,6 +23,8 @@ export class ChatPage extends Component {
 
     this.updateRoomState = this.updateRoomState.bind(this);
     this.createRoom = this.createRoom.bind(this);
+
+    console.log(this.props.rooms);
   }
 
   updateRoomState(e) {
@@ -52,11 +53,13 @@ export class ChatPage extends Component {
           saving={this.state.saving}
         />
 
-        <ul>
-          {this.state.rooms.map((room) => {
-            <li>{room.name}</li>
-          })}
-        </ul>
+        {this.props.rooms.map((room) => {
+          return (
+            <li>
+              <a href={"/rooms/" + room.id}>{room.name}</a>
+            </li>
+          );
+        })}
       </div>
     );
   }

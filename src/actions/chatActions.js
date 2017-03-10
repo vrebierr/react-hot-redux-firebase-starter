@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import firebase from 'firebase/firebase-browser';
 import firebaseApi from '../api/firebase';
 import * as types from './actionTypes';
 import toastr from 'toastr';
@@ -99,7 +100,9 @@ export function fetchRoom(id) {
 export function sendMessage(message, cb) {
   return (dispatch) => {
     const ref = firebaseApi.database().ref('messages');
-    console.log(message);
+    const currentUser = firebase.auth().currentUser;
+
+    message.author = currentUser.email;
 
     ref.push(message)
       .then(() => {

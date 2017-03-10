@@ -53,7 +53,7 @@ export class RoomPage extends Component {
         <div>
           {this.props.messages.map((item) => {
             return (
-              <p><strong>Anonyme:</strong> {item.content}</p>
+              <p><strong>{item.author} :</strong> {item.content}</p>
             )
           })}
         </div>

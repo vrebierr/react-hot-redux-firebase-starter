@@ -70,6 +70,10 @@ class FirebaseApi {
       .set(value);
 
   }
+
+  static database() {
+    return firebase.database();
+  }
 }
 
 export default FirebaseApi;

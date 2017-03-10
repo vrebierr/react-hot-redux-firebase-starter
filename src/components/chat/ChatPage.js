@@ -49,7 +49,15 @@ export class ChatPage extends Component {
   render() {
     return (
       <div>
-        <h1>Liste des Rooms</h1>
+        <h1>Liste des salles</h1>
+
+        {this.props.rooms.map((room) => {
+          return (
+            <li key={room.id}>
+              <Link to={"/rooms/" + room.id}>{room.name}</Link>
+            </li>
+          );
+        })}
 
         <RoomForm
           room={this.state.room}
@@ -57,14 +65,6 @@ export class ChatPage extends Component {
           onSave={this.createRoom}
           saving={this.state.saving}
         />
-
-      {this.props.rooms.map((room, index) => {
-          return (
-            <li key={index}>
-              <Link to={"/rooms/" + room.id}>{room.name}</Link>
-            </li>
-          );
-        })}
       </div>
     );
   }

@@ -7,8 +7,8 @@ import ProtectedPage from './components/protected/ProtectedPage';
 import AboutPage from './components/about/AboutPage';
 import LoginPage from './components/login/LoginPage'; //eslint-disable-line import/no-named-as-default
 import RegistrationPage from './components/registration/RegistrationPage'; //eslint-disable-line import/no-named-as-default
-import ChatPage from './components/chat/ChatPage';
-import RoomPage from './components/chat/RoomPage';
+import ChatPage from './components/chat/ChatPage'; //eslint-disable-line import/no-named-as-default
+import RoomPage from './components/chat/RoomPage'; //eslint-disable-line import/no-named-as-default
 import {requireAdmin} from './actions/authActions';
 
 

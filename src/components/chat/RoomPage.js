@@ -53,8 +53,8 @@ export class RoomPage extends Component {
         <div>
           {this.props.messages.map((item) => {
             return (
-              <p><strong>{item.author} :</strong> {item.content}</p>
-            )
+              <p key={item.id}><strong>{item.author} :</strong> {item.content}</p>
+            );
           })}
         </div>
 
@@ -68,6 +68,15 @@ export class RoomPage extends Component {
     );
   }
 }
+
+RoomPage.propTypes = {
+  routeParams: PropTypes.node.isRequired,
+  sendMessage: PropTypes.func.isRequired,
+  fetchMessages: PropTypes.func.isRequired,
+  fetchRoom: PropTypes.func.isRequired,
+  room: PropTypes.node.isRequired,
+  messages: PropTypes.array.isRequired
+};
 
 export default checkAuth(connect(
   (state) => ({ messages: state.messages, room: state.room }),

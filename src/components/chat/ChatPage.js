@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
@@ -35,10 +36,16 @@ export class ChatPage extends Component {
 
   createRoom(e) {
     e.preventDefault();
-
     this.setState({ savind: true });
-    this.props.createRoom(this.state.room);
-    this.setState({ savind: false });
+
+    this.props.createRoom(this.state.room, () => {
+      this.setState({
+        savind: false,
+        room: {
+          name: ''
+        }
+      });
+    });
   }
 
   render() {
@@ -56,7 +63,7 @@ export class ChatPage extends Component {
         {this.props.rooms.map((room) => {
           return (
             <li>
-              <a href={"/rooms/" + room.id}>{room.name}</a>
+              <Link to={"/rooms/" + room.id}>{room.name}</Link>
             </li>
           );
         })}

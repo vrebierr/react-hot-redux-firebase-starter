@@ -18,23 +18,35 @@ export function roomsFetchedSuccess(rooms) {
   };
 }
 
-export function roomFetchedSuccess(rooms) {
+export function roomFetchedSuccess(room) {
   return {
     type: types.ROOM_FETCHED_SUCCESS,
-    rooms
+    room
   };
 }
 
-export function createRoom(room) {
+export function messageCreatedSuccess(message) {
+  return {
+    type: types.MESSAGE_CREATED_SUCCESS,
+    message
+  };
+}
+
+export function messagesFetchedSuccess(messages) {
+  return {
+    type: types.MESSAGES_FETCHED_SUCCESS,
+    messages
+  };
+}
+
+export function createRoom(room, cb) {
   return (dispatch) => {
     const ref = firebaseApi.database().ref('rooms');
 
     ref.push(room)
       .then(() => {
-        ref.orderByKey().on('child_added', function(snap) {
-          dispatch(roomCreatedSuccess(snap.val()));
-          dispatch(push(`/rooms/${snap.getKey()}`));
-        });
+        dispatch(fetchRooms())
+        cb();
       })
       .catch((err) => {
         ajaxCallError(err);
@@ -80,23 +92,35 @@ export function fetchRoom(id) {
       })
       .catch((err) => {
         ajaxCallError(err);
-        throw(err);
       });
   };
 }
 
-export function sendMessage(room) {
+export function sendMessage(message, cb) {
   return (dispatch) => {
+    const ref = firebaseApi.database().ref('messages');
+    console.log(message);
 
+    ref.push(message)
+      .then(() => {
+        dispatch(fetchMessages(message.room))
+        cb();
+      })
+      .catch((err) => {
+        ajaxCallError(err);
+        throw(err);
+        cb(err);
+      });
   };
 }
 
-export function fetchMessages(room) {
+export function fetchMessages(id) {
   return (dispatch) => {
     firebaseApi
       .database()
-      .ref(`/rooms/${room.id}/messages`)
-      .limitToLast(10)
+      .ref('messages')
+      .orderByChild('room')
+      .equalTo(id)
       .once('value')
       .then((snap) => {
         const messages = [];
@@ -107,6 +131,8 @@ export function fetchMessages(room) {
 
           messages.push(message);
         });
+
+        dispatch(messagesFetchedSuccess(messages));
       });
   };
 }

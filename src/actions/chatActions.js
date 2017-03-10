@@ -123,6 +123,7 @@ export function fetchMessages(id) {
       .ref('messages')
       .orderByChild('room')
       .equalTo(id)
+      .limitToLast(10)
       .once('value')
       .then((snap) => {
         const messages = [];
